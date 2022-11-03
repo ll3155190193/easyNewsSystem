@@ -3,8 +3,9 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const devServer = require('./webpack.devserver');
+const devServer = require('./webpack.devServer');
 const { arrHTML, entry } = require('./webpack.html');
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
     //mode是打包模式：development|production|none
@@ -83,9 +84,14 @@ module.exports = {
     },
     optimization: {
         minimizer: [
-            new CssMinimizerPlugin()
+            new CssMinimizerPlugin(),
+            new TerserPlugin()
         ],
-        minimize: true
+        minimize: true,
+        splitChunks: {
+            // 自动提取所有公共模块到单独 bundle
+            chunks: 'all'
+        }
     },
     plugins: [
         ...arrHTML,

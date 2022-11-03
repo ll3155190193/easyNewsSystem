@@ -1,0 +1,34 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+}
+
+.left {
+    width: 150px;
+}
+
+.right {
+    flex: 1;
+    overflow: hidden;
+}
+
+.right iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
