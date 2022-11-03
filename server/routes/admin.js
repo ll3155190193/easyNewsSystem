@@ -3,6 +3,7 @@ var router = express.Router();
 const query = require('../utils/mySql');
 const jiami = require('../utils/sha1');
 const getToken = require('../utils/getToken');
+const { text } = require('express');
 
 // 注册
 router.post('/reg', async function (req, res) {
@@ -27,7 +28,11 @@ router.post('/reg', async function (req, res) {
 })
 // 登录
 router.post('/login', function (req, res) {
-  res.json('q');
+  try {
+
+  } catch (e) {
+    text(e);
+  }
 })
 // 修改密码
 router.post('/modifyPwd', function (req, res) {
