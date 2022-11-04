@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const query = require('../utils/mySql');
 const jiami = require('../utils/sha1');
-const getToken = require('../utils/getToken');
+const { getToken, verifyToken } = require('../utils/token');
 require('express-async-errors');
 const { expressjwt } = require('express-jwt');
 
@@ -45,7 +45,7 @@ router.post('/login', async function (req, res, next) {
 // 修改密码
 // router.all('*',);
 
-router.post('/modifyPwd', expressjwt({ secret: 'lile', algorithms: ['HS256'] }), async function (req, res, next) {
+router.post('/modifyPwd', verifyToken(), async function (req, res, next) {
   const { newPwd } = req.body;
   const { id } = req.auth;
   console.log(id, newPwd);
@@ -74,12 +74,22 @@ router.post('/addNewsClass', async function (req, res, next) {
   }
 });
 // 修改新闻
-router.post('/modifyClass', function (req, res, next) {
-  res.json('q');
+router.post('/modifyClass', async function (req, res, next) {
+  const { className, classExplain, id } = req.body;
+  await query('update classnews set className=?,classExplain=?,updatedAt=now() where id=?', [className, classExplain, id]);
+  res.json({
+    flag: true,
+    msg: '修改成功'
+  })
 })
 // 移除新闻
-router.post('/deleteClass', function (req, res, next) {
-  res.json('q');
+router.post('/deleteClass', async function (req, res, next) {
+  const { classId } = req.body;
+  await query('delete from classnews where id=?', [classId]);
+  res.json({
+    flag: true,
+    msg: '删除成功'
+  })
 })
 // 添加新闻
 router.post('/addNews', function (req, res, next) {
