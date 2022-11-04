@@ -1,4 +1,12 @@
 const path = require('path');
+const arr = require('./module');
+
+const watchFiles = [];
+arr.forEach((item) => {
+    watchFiles.push(
+        `./src/manage/${item}.html`
+    )
+})
 module.exports = {
     //端口号
     port: 8080,
@@ -7,12 +15,7 @@ module.exports = {
     //打开服务器时自动开启浏览器访问
     open: true,
     //监控变化的文件的，被监控的文件只要发生变化，就会重新编译，自动刷新浏览器。
-    watchFiles: [
-        './src/manage/index.html',
-        './src/manage/login.html',
-        './src/manage/reg.html',
-        './src/manage/modifyPwd.html',
-    ],
+    watchFiles,
     static: {
         //设置express服务器的根目录。
         directory: path.join(__dirname, 'dist'),
