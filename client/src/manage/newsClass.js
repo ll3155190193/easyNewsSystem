@@ -111,7 +111,7 @@ function deleteClass() {
                 //隶属于window的弹窗优先级最高。解决的方式是将弹窗放入setTimeout中，延迟一定时间后再弹窗。
                 drawTable();
                 setTimeout(function () {
-                    window.alert('删除成功');
+                    window.alert('成功删除');
                 }, 10);
             } else {
                 alert(result.msg)
